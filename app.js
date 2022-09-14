@@ -10,8 +10,8 @@ app.use(cors())
 app.use(express.json())
 
 
-
-// schema design
+// SCHEMA --> MODEL --> QUERY
+// product schema design
 const productSchema = mongoose.Schema({
     name: {
         type: String,
@@ -37,7 +37,7 @@ const productSchema = mongoose.Schema({
         type: String,
         required: true,
         enum: {
-            value: ["kg", "litre", "pcs"],
+            values: ["kg", "litre", "pcs"],
             message: "Unit value can't be {VALUE}, it must be kg/litre/pcs"
         }
     },
@@ -64,23 +64,23 @@ const productSchema = mongoose.Schema({
         type: String,
         required: true,
         enum: {
-            value: ["in-stock", "out-of-stock", "discontinued"],
+            values: ["in-stock", "out-of-stock", "discontinued"],
             message: "Status can't be {VALUE}, it can be in-stock/out-of-stock/discontinued"
         }
     },
 
-    supplier: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Supplier"
-    },
+    // supplier: {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: "Supplier"
+    // },
 
-    categories: [{
-        name: {
-            type: String,
-            required: true
-        },
-        _id: mongoose.Schema.Types.ObjectId
-    }]
+    // categories: [{
+    //     name: {
+    //         type: String,
+    //         required: true
+    //     },
+    //     _id: mongoose.Schema.Types.ObjectId
+    // }]
 
     // createdAt:{
     //     type: Date,
@@ -94,9 +94,26 @@ const productSchema = mongoose.Schema({
 }, { timestamps: true })
 
 
+// Model
+const Product = mongoose.model('Product', productSchema)
+
+
 
 app.get('/', (req, res) => {
     res.send("Route is working! YaY!")
+})
+
+app.post('/api/v1/product', async (req, res, next) => {
+    //    save or create
+    try {
+        const product = new Product(req.body)
+
+        const result = await product.save()
+        res.status(200).send({ status: 'successful', message: 'Product inserted successfully!', data: result })
+    } catch (error) {
+        res.status(400).send({ status: 'fail', message: 'data is not inserted' })
+        error: error.message
+    }
 })
 
 module.exports = app
