@@ -106,9 +106,13 @@ app.get('/', (req, res) => {
 app.post('/api/v1/product', async (req, res, next) => {
     //    save or create
     try {
-        const product = new Product(req.body)
+        // for save method
+        // const product = new Product(req.body)
+        // const result = await product.save()
 
-        const result = await product.save()
+        // for create method
+        const result = await Product.create(req.body)
+
         res.status(200).send({ status: 'successful', message: 'Product inserted successfully!', data: result })
     } catch (error) {
         res.status(400).send({ status: 'fail', message: 'data is not inserted' })
