@@ -142,8 +142,25 @@ app.post('/api/v1/product', async (req, res, next) => {
 
         res.status(200).send({ status: 'successful', message: 'Product inserted successfully!', data: result })
     } catch (error) {
-        res.status(400).send({ status: 'fail', message: 'data is not inserted' })
-        error: error.message
+        res.status(400).send({
+            status: 'fail',
+            message: 'data is not inserted',
+            error: error.message
+        })
+    }
+})
+
+app.get('/api/v1/product', async (req, res, next) => {
+    try {
+        const products = await Product.find({})
+        res.status(200).json({ status: "success", data: products })
+    }
+    catch (error) {
+        res.status(400).send({
+            status: "fail",
+            message: "Can't get the data!!",
+            error: error.message
+        })
     }
 })
 
