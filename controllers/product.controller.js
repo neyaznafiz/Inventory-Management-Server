@@ -25,7 +25,7 @@ exports.getProduct = async (req, res, next) => {
 
 
 // product post controller
-exports.createProducct = async (req, res, next) => {
+exports.createProduct = async (req, res, next) => {
     //    save or create
     try {
         // for save method

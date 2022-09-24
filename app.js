@@ -9,40 +9,15 @@ const { reset } = require("nodemon")
 app.use(cors())
 app.use(express.json())
 
-
-
-
-
-// mongoose middleware for saving data : pre / post
-productSchema.pre('save', function (next) {
-    // this -->
-    if (this.quantity == 0) {
-        this.status = 'out-of-stock'
-    }
-    next()
-})
-
-// productSchema.post('save', function (doc, next) {
-//     console.log('after saving data')
-//     next()
-// })
-
-// for instance
-productSchema.methods.logger = function () {
-    console.log(`Data saved for ${this.name}`)
-}
-
-
-
-
-
+// routes
+const productRoute = require('./routes/product.route')
 
 app.get('/', (req, res) => {
     res.send("Route is working! YaY!")
 })
 
-app.post('/api/v1/product')
+// product api
+app.use('/api/v1/product', productRoute)
 
-app.get('/api/v1/product')
 
 module.exports = app
