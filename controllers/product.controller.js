@@ -36,3 +36,18 @@ exports.createProduct = async (req, res, next) => {
         })
     }
 }
+
+
+// product update with patch controller
+exports.updateProduct = async (req, res, next) => {
+    try {
+
+    }
+    catch (error) {
+        res.status(400).send({
+            status: 'fail',
+            message: "Couldn't update the product.",
+            error: error.message
+        })
+    }
+}
