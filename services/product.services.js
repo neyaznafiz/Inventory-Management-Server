@@ -35,7 +35,8 @@ exports.postProductServices = async (data) => {
 exports.updateProductService = async (productId, data) => {
   const updateProductResult = await Product.updateOne(
     { _id: productId },
-    { $set: data }
+    { $set: data },
+    { runValidators: true }
   );
 
   return updateProductResult;
