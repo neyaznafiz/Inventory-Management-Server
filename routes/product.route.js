@@ -11,4 +11,4 @@ router.route('/')
 router.route('/:id')
     .patch(productController.updateProduct)
 
-module.exports = router
+module.exports = router 
