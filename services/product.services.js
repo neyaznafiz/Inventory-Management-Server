@@ -38,6 +38,10 @@ exports.updateProductService = async (productId, data) => {
     { $set: data },
     { runValidators: true }
   );
+    
+    // it's a old update method
+    // const product = await Product.findById(productId)
+    // const updateProductResult = await product.set(data).save()
 
   return updateProductResult;
 };
