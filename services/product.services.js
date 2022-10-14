@@ -33,15 +33,22 @@ exports.postProductServices = async (data) => {
 };
 
 exports.updateProductService = async (productId, data) => {
+  // const updateProductResult = await Product.updateOne(
+  //   { _id: productId },
+  //   { $set: data },
+  //   { runValidators: true }
+  // );
+
+  // we can use this $inc method for how much we incriment the value
   const updateProductResult = await Product.updateOne(
     { _id: productId },
-    { $set: data },
+    { $inc: data },
     { runValidators: true }
   );
-    
-    // it's a old update method
-    // const product = await Product.findById(productId)
-    // const updateProductResult = await product.set(data).save()
+
+  // it's a old update method
+  // const product = await Product.findById(productId)
+  // const updateProductResult = await product.set(data).save()
 
   return updateProductResult;
 };
