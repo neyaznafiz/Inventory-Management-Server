@@ -2,13 +2,16 @@ const express = require("express");
 const router = express.Router();
 const productController = require("../controllers/product.controller");
 
+router.route("/bulk-update").patch(productController.bulkUpdateProduct);
+
 router
   .route("/")
   .get(productController.getProduct)
   .post(productController.createProduct);
 
-router.route("/bulk-update").patch(productController.bulkUpdateProduct);
-
-router.route("/:id").patch(productController.updateProduct);
+router
+  .route("/:id")
+  .patch(productController.updateProduct)
+  .delete(productController.deleteProductById);
 
 module.exports = router;

@@ -3,6 +3,7 @@ const {
   postProductServices,
   updateProductService,
   bulkUpdateProductService,
+  deleteProductByIdService,
 } = require("../services/product.services");
 
 // product get controller
@@ -46,12 +47,12 @@ exports.createProduct = async (req, res, next) => {
 exports.updateProduct = async (req, res, next) => {
   try {
     const { id } = req.params;
-      const result = await updateProductService(id, req.body);
+    const result = await updateProductService(id, req.body);
 
-      res.status(200).send({
-        status: "successful",
-        message: "Successfully updated the product.",
-      });
+    res.status(200).send({
+      status: "successful",
+      message: "Successfully updated the product.",
+    });
   } catch (error) {
     res.status(400).send({
       status: "fail",
@@ -61,20 +62,38 @@ exports.updateProduct = async (req, res, next) => {
   }
 };
 
-
 // bulk update
 exports.bulkUpdateProduct = async (req, res, next) => {
   try {
-      const result = await bulkUpdateProductService(req.body);
+    const result = await bulkUpdateProductService(req.body);
 
-      res.status(200).send({
-        status: "successful",
-        message: "Successfully updated the product.",
-      });
+    res.status(200).send({
+      status: "successful",
+      message: "Successfully updated the product.",
+    });
   } catch (error) {
     res.status(400).send({
       status: "fail",
       message: "Couldn't update the product.",
+      error: error.message,
+    });
+  }
+};
+
+// delete product
+exports.deleteProductById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const result = await deleteProductByIdService(id)
+      
+      res.status(200).send({
+      status: "successful",
+      message: "Successfully delete the product.",
+    });
+  } catch (error) {
+    res.status(400).send({
+      status: "fail",
+      message: "Couldn't delete the product.",
       error: error.message,
     });
   }
