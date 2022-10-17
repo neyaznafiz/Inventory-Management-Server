@@ -2,6 +2,7 @@ const {
   getProductServices,
   postProductServices,
   updateProductService,
+  bulkUpdateProductService,
 } = require("../services/product.services");
 
 // product get controller
@@ -41,11 +42,30 @@ exports.createProduct = async (req, res, next) => {
   }
 };
 
-// product update with patch controller
+// product updateOne with patch controller
 exports.updateProduct = async (req, res, next) => {
   try {
     const { id } = req.params;
       const result = await updateProductService(id, req.body);
+
+      res.status(200).send({
+        status: "successful",
+        message: "Successfully updated the product.",
+      });
+  } catch (error) {
+    res.status(400).send({
+      status: "fail",
+      message: "Couldn't update the product.",
+      error: error.message,
+    });
+  }
+};
+
+
+// bulk update
+exports.bulkUpdateProduct = async (req, res, next) => {
+  try {
+      const result = await bulkUpdateProductService(req.body);
 
       res.status(200).send({
         status: "successful",

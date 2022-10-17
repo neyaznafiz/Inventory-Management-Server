@@ -32,23 +32,31 @@ exports.postProductServices = async (data) => {
   return product;
 };
 
+// product update by id
 exports.updateProductService = async (productId, data) => {
-  // const updateProductResult = await Product.updateOne(
-  //   { _id: productId },
-  //   { $set: data },
-  //   { runValidators: true }
-  // );
-
-  // we can use this $inc method for how much we incriment the value
   const updateProductResult = await Product.updateOne(
     { _id: productId },
-    { $inc: data },
+    { $set: data },
     { runValidators: true }
   );
+
+  // we can use this $inc method for how much we incriment the value
+  // const updateProductResult = await Product.updateOne(
+  //   { _id: productId },
+  //   { $inc: data },
+  //   { runValidators: true }
+  // );
 
   // it's a old update method
   // const product = await Product.findById(productId)
   // const updateProductResult = await product.set(data).save()
 
   return updateProductResult;
+};
+
+// product bulk update
+exports.bulkUpdateProductService = async (data) => {
+  const result = await Product.updateMany({ _id: data.ids }, data.data, {runValidators: true});
+
+  return result;
 };
