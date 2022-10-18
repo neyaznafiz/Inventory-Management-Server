@@ -10,7 +10,16 @@ const {
 // product get controller
 exports.getProduct = async (req, res, next) => {
   try {
-    const products = await getProductServices();
+    const queryObject = {...req.query};
+
+    // sort, page, limit --> exclude
+    const excludeFields = ['sort', 'page', 'limit']
+    excludeFields.forEach(field => delete queryObject[field])
+    
+    console.log('original object', req.query);
+    console.log('query object', queryObject)
+
+    const products = await getProductServices(queryObject);
 
     res.status(200).json({ status: "success", data: products });
   } catch (error) {
@@ -85,15 +94,15 @@ exports.bulkUpdateProduct = async (req, res, next) => {
 exports.deleteProductById = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const result = await deleteProductByIdService(id)
+    const result = await deleteProductByIdService(id);
     if (!result.deletedCount) {
       res.status(400).send({
         status: "fail",
-        error: "Couldn't delete the product."
-      })
+        error: "Couldn't found the product. for delete",
+      });
     }
-      
-      res.status(200).send({
+
+    res.status(200).send({
       status: "successful",
       message: "Successfully delete the product.",
     });
@@ -105,7 +114,6 @@ exports.deleteProductById = async (req, res, next) => {
     });
   }
 };
-
 
 // bulk delete
 exports.bulkDeleteProduct = async (req, res, next) => {

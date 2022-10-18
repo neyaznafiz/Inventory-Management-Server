@@ -1,8 +1,8 @@
 const Product = require("../models/Product");
 
 // service for get product
-exports.getProductServices = async (limit) => {
-  const products = await Product.find({}).limit(+limit);
+exports.getProductServices = async (query) => {
+  const products = await Product.find(query);
   //  const products = await Product.findById("632202931d18e539d4f2f4d7")
   // const products = await Product.find({$or: [{_id: "632202931d18e539d4f2f4d7"}, {name:"chal"}]})
   // const products = await Product.find({ status: { $ne: "out-of-stock" } })
