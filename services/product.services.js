@@ -5,8 +5,12 @@ exports.getProductServices = async (filters, queries) => {
   // const products = await Product.find(query);
 
   const products = await Product.find(filters)
+    .skip(queries.skip)
+    .limit(queries.limit)
     .select(queries.fields)
     .sort(queries.sortBy);
+  
+  const totalProducts = await Product.countDocuments(filters)
 
   //  const products = await Product.findById("632202931d18e539d4f2f4d7")
   // const products = await Product.find({$or: [{_id: "632202931d18e539d4f2f4d7"}, {name:"chal"}]})
@@ -16,7 +20,7 @@ exports.getProductServices = async (filters, queries) => {
   //     .where("quantity").gt(100).lt(600)
   //     .limit(2).sort({ quantity: -1 })
 
-  return products;
+  return {totalProducts, products};
 };
 
 // service for post product
