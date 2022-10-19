@@ -9,9 +9,9 @@ exports.getProductServices = async (filters, queries) => {
     .limit(queries.limit)
     .select(queries.fields)
     .sort(queries.sortBy);
-  
-  const totalProducts = await Product.countDocuments(filters)
 
+  const totalProducts = await Product.countDocuments(filters);
+  const pageCount = Math.ceil(totalProducts / queries.limit);
   //  const products = await Product.findById("632202931d18e539d4f2f4d7")
   // const products = await Product.find({$or: [{_id: "632202931d18e539d4f2f4d7"}, {name:"chal"}]})
   // const products = await Product.find({ status: { $ne: "out-of-stock" } })
@@ -20,7 +20,7 @@ exports.getProductServices = async (filters, queries) => {
   //     .where("quantity").gt(100).lt(600)
   //     .limit(2).sort({ quantity: -1 })
 
-  return {totalProducts, products};
+  return { totalProducts, pageCount, products };
 };
 
 // service for post product
