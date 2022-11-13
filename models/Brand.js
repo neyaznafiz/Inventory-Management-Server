@@ -31,7 +31,7 @@ const brandSchema = mongoose.Schema({
     {
       type: ObjectId,
       ref: "Product",
-    },
+    }
   ],
 
   suppliers: [
@@ -41,8 +41,8 @@ const brandSchema = mongoose.Schema({
       id: {
         type: ObjectId,
         ref: "Supplier",
-      },
-    },
+      }
+    }
   ],
 
   status: {
