@@ -1,4 +1,25 @@
-const { createBrandService } = require("../services/brand.services");
+const {
+  createBrandService,
+  getBrandsService,
+} = require("../services/brand.services");
+
+exports.getBrands = async (req, res, next) => {
+  try {
+    const brands = await getBrandsService(req.body);
+
+    res.status(200).json({
+      status: "success",
+      message: "Brands get successfully!!",
+      data: brands,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      message: "Couldn't get brands..!",
+      error: error.message,
+    });
+  }
+};
 
 exports.createBrand = async (req, res, next) => {
   try {
