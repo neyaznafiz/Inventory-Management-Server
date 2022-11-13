@@ -32,7 +32,7 @@ const storeSchema = mongoose.Schema(
       id: {
         type: ObjectId,
         ref: "User",
-      },
+      }
     },
 
     status: {
