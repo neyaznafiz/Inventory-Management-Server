@@ -12,6 +12,12 @@ exports.getBrandByIdService = async (id) => {
   return brand;
 };
 
+// update singe brand by id service 
+exports.updateSingleBrandService = async (id, data) => {
+    const result = await Brand.updateOne({ _id: id }, data, {runValidators: true});
+  return result;
+}
+
 // create brand service
 exports.createBrandService = async (data) => {
   console.log(data);
